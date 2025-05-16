@@ -1,8 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const CreatedGallery = () => {
   const [createdimages, setCreatedImages] = useState([]);
+  useEffect(() => {
+    setCreatedImages([]);
+  }, []);
   return (
     <div className="flex justify-center items-center h-[80vh]">
       {!createdimages.length && (

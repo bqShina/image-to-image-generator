@@ -1,0 +1,1 @@
+export const ASPECT_RATIOS: string[] = ["16:9", "4:5", "1:1", "9:16"] as const;
