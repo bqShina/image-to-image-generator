@@ -3,7 +3,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="p-6">
+    <nav className="sticky top-0 z-100 p-6 bg-inherit">
       <div className="flex">
         <Link
           href="/"

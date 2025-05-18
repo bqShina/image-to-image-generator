@@ -9,35 +9,82 @@ import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import { ASPECT_RATIOS } from "@/constants";
 import axios from "axios";
+import { VscLoading } from "react-icons/vsc";
+import { useImageContext } from "@/context/ImageContext";
+import { RiResetLeftLine } from "react-icons/ri";
 
 const PromptArea = () => {
-  const { register, control, handleSubmit } = useForm<PromptFormData>({
-    defaultValues: {
-      aspectRatio: ASPECT_RATIOS[0],
-    },
-  });
+  const { register, control, handleSubmit, setValue, reset } =
+    useForm<PromptFormData>({
+      defaultValues: {
+        prompt: "",
+        aspectRatio: ASPECT_RATIOS[0],
+      },
+    });
+  const { generatedImages, setGeneratedImages } = useImageContext();
   const [uploadImage, setUploadImage] = useState("");
+  const [generating, setGenerating] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const resetPrompt = () => {
+    reset();
+    setUploadImage("");
+    if (generating) setGenerating(false);
+  };
 
   const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const image = event.target.files?.[0];
     if (image) {
-      setUploadImage(URL.createObjectURL(image));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          setUploadImage(reader.result);
+          setValue("image", reader.result);
+        }
+      };
+      reader.readAsDataURL(image);
     }
   };
 
   const handleGenerateImage = async (data: PromptFormData) => {
-    // const imageFile = data.image[0];
-    // if (!imageFile) return;
+    setGenerating(true);
+    try {
+      const response = await axios.post("/api/generate", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        const imageUrls: string = response.data.output[0];
 
-    // const reader = new FileReader();
-    // reader.onloadend = () => {
-    //   const base64Image = reader.result as string;
-
-    // }
-    await axios.post("/api/generate", JSON.stringify(data));
+        setGeneratedImages([
+          ...generatedImages,
+          imageUrls,
+          // "https://replicate.delivery/xezq/02KXOsibKl4oJh8OqIgR8jBx5DgWdvs1TahYdeVeQeiCfQ3SB/out-0.png",
+        ]);
+        setGenerating(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage("Image generating fails");
+    }
   };
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2  bg-[#ffefe5] dark:bg-[#222222FA] rounded-lg m-auto w-[60%] p-6 shadow">
+    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2  bg-[#ffefe5] dark:bg-[#222222FA] rounded-lg m-auto sm:w-[60%] w-[90%] p-6 shadow">
+      {errorMessage && (
+        <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded flex justify-between w-[30%]">
+          <p role="alert">{errorMessage}</p>
+          <button
+            className="cursor-pointer"
+            onClick={() => {
+              setErrorMessage("");
+              resetPrompt();
+            }}
+          >
+            <RxCross2 />
+          </button>
+        </div>
+      )}
       <form
         className="flex justify-between space-x-2"
         onSubmit={handleSubmit((data) => handleGenerateImage(data))}
@@ -45,7 +92,10 @@ const PromptArea = () => {
         <div className="flex flex-col space-y-3 w-[10%] justify-between">
           {uploadImage ? (
             <div className="relative inline-block w-15">
-              <button className="relative w-15 h-15 rounded-md cursor-pointer shadow overflow-hidden">
+              <button
+                type="button"
+                className="relative w-15 h-15 rounded-md cursor-pointer shadow overflow-hidden"
+              >
                 <Image
                   src={uploadImage}
                   alt="upload image"
@@ -67,9 +117,7 @@ const PromptArea = () => {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                {...register("image", {
-                  onChange: (e) => handleUploadImage(e),
-                })}
+                onChange={handleUploadImage}
               />
               <FiImage />
             </label>
@@ -88,15 +136,36 @@ const PromptArea = () => {
             placeholder="Add the product prompt"
             {...register("prompt")}
           ></textarea>
-          <button
-            type="submit"
-            disabled={!uploadImage}
-            className={`p-2 rounded ${
-              uploadImage ? "cursor-pointer" : "cursor-not-allowed"
-            } bg-[#ffd7be] dark:bg-[#ffffff29]`}
-          >
-            <GoArrowUp />
-          </button>
+          <div className="flex space-x-2">
+            {generatedImages && (
+              <button
+                type="button"
+                className="cursor-pointer"
+                onClick={() => {
+                  resetPrompt();
+                  setGeneratedImages([]);
+                }}
+              >
+                <RiResetLeftLine className="text-sm" />
+              </button>
+            )}
+
+            <button
+              type="submit"
+              disabled={!uploadImage && generating}
+              className={`p-2 rounded ${
+                uploadImage && !generating
+                  ? "cursor-pointer"
+                  : "cursor-not-allowed"
+              } bg-[#ffd7be] dark:bg-[#ffffff29]`}
+            >
+              {generating ? (
+                <VscLoading className="animate-spin" />
+              ) : (
+                <GoArrowUp />
+              )}
+            </button>
+          </div>
         </div>
       </form>
     </div>
