@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🖼️ Image-to-Image Generator (Next.js + Replicate API)
 
-## Getting Started
+This project is an **Image-to-Image Generator** built with **Next.js** and **TypeScript**. It enables users to upload product images, describe a new scene, and generate AI-powered variations using [Replicate's `stability-ai/sdxl`](https://replicate.com/stability-ai/sdxl) model.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- Upload product images (via `<input type="file">`)
+- Automatically convert images to **Base64** format for API processing
+- Send the **image**, **aspect ratio**, and **prompt** to Replicate’s SDXL model
+- Render generated images with scene modifications — users can modify prompts and re-generate multiple times
+- Generated image **gallery** with all previous results (each image includes a **download button** on the top right corner)
+- Ability to **reset** the current state via the **reset button** (bottom right corner)
+- **Light and dark mode** support
+- **Form validation and management** using `react-hook-form`
+
+---
+
+## 🛠️ Tech Stack & Packages
+
+| Package           | Purpose                                                       |
+| ----------------- | ------------------------------------------------------------- |
+| `next`            | React framework for production apps                           |
+| `typescript`      | Provides static typing for better development experience      |
+| `axios`           | For making API calls to Replicate                             |
+| `react-hook-form` | Manages form state and validation efficiently                 |
+| `zod`             | Schema-based form validation used alongside `react-hook-form` |
+| `replicate`       | Node SDK to interface with Replicate's AI APIs                |
+| `react-icons`     | Icon library used for UI enhancements                         |
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/your-username/image-to-image-generator.git
+cd image-to-image-generator
+npm install
+
+```
+
+## ⚙️ Setup Instructions
+
+### Create `.env.local`
+
+```env
+REPLICATE_API_TOKEN=will_provide_in_email
+```
+
+### Run the project locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Then open your browser and go to:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```arduino
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧪 Testing
 
-To learn more about Next.js, take a look at the following resources:
+This project is manually tested through UI interactions:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Upload an image
+- Enter a prompt (e.g., change the product background)
+- Submit and observe the generated results
+- Try modifying the prompt and regenerate
+- Download or reset using UI buttons
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+/components        - Reusable UI components
+/context           - React Context for image state (generated images)
+/pages             - Next.js routing system
+/api               - Backend API route handlers
+/public            - Static assets
+/types             - TypeScript interfaces and types
+/constants         - Reusable constants
+.env.local         - Environment variables (excluded from git)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📸 Screenshot
+
+## ![App Screenshot](public/screenshot.png)
+
+---
+
+## 📤 Future Improvements
+
+- Add preview of uploaded image before generation
+- Add drag-and-drop file input
+- Enable selection of different models
+- Add more responsive design by tailwind
+
+---
+
+## 🙋‍♀️ Author
+
+Built with ❤️ by Shina
