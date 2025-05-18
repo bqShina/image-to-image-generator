@@ -18,16 +18,16 @@ export async function POST(request: NextRequest) {
 
     const input: ImageGenerationInput = {
         "image": options.image,
-        "prompt": options.prompt,
+        "prompt": options.prompt ? options.prompt : "keep the original product, change background to studio lighting setup",
         "refine": "expert_ensemble_refiner",
         "scheduler": "KarrasDPM",
         "num_outputs": 1,
-        "guidance_scale": 7.5,
+        "guidance_scale": 6,
         "apply_watermark": false,
         "high_noise_frac": 0.8,
-        "negative_prompt": "ugly, deformed, noisy, blurry, distorted, change the appearance of the original product",
-        "prompt_strength": 0.9,
-        "num_inference_steps": 50
+        "negative_prompt": "distorted product, change in shape, wrong color, unrealistic textures",
+        "prompt_strength": 0.7,
+        "num_inference_steps": 30
     };
 
     try {

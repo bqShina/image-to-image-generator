@@ -8,7 +8,7 @@ This project is an **Image-to-Image Generator** built with **Next.js** and **Typ
 
 - Upload product images (via `<input type="file">`)
 - Automatically convert images to **Base64** format for API processing
-- Send the **image**, **aspect ratio**, and **prompt** to Replicate’s SDXL model
+- Send the **image** and **prompt** to Replicate’s SDXL model
 - Render generated images with scene modifications — users can modify prompts and re-generate multiple times
 - Generated image **gallery** with all previous results (each image includes a **download button** on the top right corner)
 - Ability to **reset** the current state via the **reset button** (bottom right corner)
