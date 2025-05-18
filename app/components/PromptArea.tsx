@@ -196,7 +196,7 @@ const PromptArea = () => {
             {...register("prompt")}
           ></textarea>
           <div className="flex space-x-2">
-            {generatedImages && (
+            {generatedImages.length > 0 && (
               <button
                 type="button"
                 className="cursor-pointer"
