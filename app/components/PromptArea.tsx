@@ -4,7 +4,7 @@ import { FiImage } from "react-icons/fi";
 import { GoArrowUp } from "react-icons/go";
 import AspectRatioSelect from "./AspectRatioSelect";
 import { PromptFormData } from "@/types/imageToImage";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import {

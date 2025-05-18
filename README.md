@@ -87,6 +87,14 @@ This project is manually tested through UI interactions:
 .env.local         - Environment variables (excluded from git)
 ```
 
+---
+
+## 📸 Screenshot
+
+## ![App Screenshot](public/screenshot.png)
+
+---
+
 ## 📤 Future Improvements
 
 - Add preview of uploaded image before generation

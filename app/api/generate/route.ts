@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
         "prompt": options.prompt,
         "refine": "expert_ensemble_refiner",
         "scheduler": "KarrasDPM",
-        "lora_scale": 0.6,
         "num_outputs": 1,
         "guidance_scale": 7.5,
         "apply_watermark": false,

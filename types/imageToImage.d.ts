@@ -11,12 +11,12 @@ export type ImageGenerationInput = {
     prompt: string;
     refine: 'expert_ensemble_refiner' | string;
     scheduler: string;
-    lora_scale: number;
+    lora_scale?: number;
     num_outputs: number;
     guidance_scale: number;
     apply_watermark: boolean;
     high_noise_frac: number;
-    negative_prompt: string;
+    negative_prompt?: string;
     prompt_strength: number;
     num_inference_steps: number;
   };
