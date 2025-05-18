@@ -32,7 +32,6 @@ export async function POST(request: NextRequest) {
 
     try {
         const output = await replicate.run(REPLICATE_API_ENDPOINT, { input });
-        console.log(output);
         return NextResponse.json({ output });
     } catch (error) {
         console.error("Replicate error:", error);
