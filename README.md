@@ -92,6 +92,7 @@ This project is manually tested through UI interactions:
 - Add preview of uploaded image before generation
 - Add drag-and-drop file input
 - Enable selection of different models
+- Add more responsive design by tailwind
 
 ---
 

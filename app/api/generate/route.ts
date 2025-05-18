@@ -18,20 +18,17 @@ export async function POST(request: NextRequest) {
 
     const input: ImageGenerationInput = {
         "image": options.image,
-        // "width": 1024,
-        // "height": 576,
-        "aspect_ratio": options.aspectRatio,
-        "prompt": "change this product background",
+        "prompt": options.prompt,
         "refine": "expert_ensemble_refiner",
-        "scheduler": "K_EULER",
+        "scheduler": "KarrasDPM",
         "lora_scale": 0.6,
         "num_outputs": 1,
         "guidance_scale": 7.5,
         "apply_watermark": false,
         "high_noise_frac": 0.8,
         "negative_prompt": "ugly, deformed, noisy, blurry, distorted, change the appearance of the original product",
-        "prompt_strength": 0.8,
-        "num_inference_steps": 25
+        "prompt_strength": 0.9,
+        "num_inference_steps": 50
     };
 
     try {

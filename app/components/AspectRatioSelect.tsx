@@ -1,19 +1,31 @@
 "use client";
-import { ASPECT_RATIOS } from "@/constants";
+import { ASPECT_RATIOS, AspectRatio } from "@/constants";
 import React, { useState } from "react";
 import { IoCropSharp } from "react-icons/io5";
+import { resizeImageAndConvertToBase64 } from "./PromptArea";
+import { UseFormSetValue } from "react-hook-form";
+
+type Props = {
+  imageFile: File | null;
+  currentAspectRatio: AspectRatio;
+  setValue: UseFormSetValue<{ image: string; prompt: string }>;
+  setCurrentAspectRatio: (value: AspectRatio) => void;
+};
 
 const AspectRatioSelect = ({
-  onChange,
-}: {
-  onChange: (val: string) => void;
-}) => {
-  const [selected, setSelected] = useState(ASPECT_RATIOS[0]);
+  imageFile,
+  currentAspectRatio,
+  setValue,
+  setCurrentAspectRatio,
+}: Props) => {
   const [open, setOpen] = useState(false);
 
-  const handleSelect = (value: string) => {
-    setSelected(value);
-    onChange(value);
+  const handleSelect = async (value: AspectRatio) => {
+    setCurrentAspectRatio(value);
+    if (imageFile) {
+      const base64 = await resizeImageAndConvertToBase64(imageFile, value);
+      setValue("image", base64);
+    }
     setOpen(false);
   };
   return (
@@ -23,7 +35,8 @@ const AspectRatioSelect = ({
         type="button"
         onClick={() => setOpen(!open)}
       >
-        <IoCropSharp /> <span className="text-xs font-bold">{selected}</span>
+        <IoCropSharp />{" "}
+        <span className="text-xs font-bold">{currentAspectRatio}</span>
       </button>
 
       {open && (
@@ -33,7 +46,9 @@ const AspectRatioSelect = ({
               key={ratio}
               onClick={() => handleSelect(ratio)}
               className={`${
-                ratio === selected ? "bg-amber-200 dark:bg-gray-800" : ""
+                ratio === currentAspectRatio
+                  ? "bg-amber-200 dark:bg-gray-800"
+                  : ""
               } px-3 py-2 cursor-pointer hover:bg-amber-200 hover:dark:dark:bg-gray-800 text-right`}
             >
               {ratio}

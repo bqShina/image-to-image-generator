@@ -1,21 +1,16 @@
-import { ASPECT_RATIOS } from "@/constants"
 import {z} from "zod"
 export const promptFormSchema = z.object({
     image: z.string().min(1, { message: "Image is required" }),
-    prompt: z.string(),
-    aspectRatio: z.enum(ASPECT_RATIOS)
+    prompt: z.string()
 });
 
 export type PromptFormData = z.infer<typeof promptFormSchema>;
 
 export type ImageGenerationInput = {
-    image: string; // base64 or URL
-    width?: number;
-    height?: number;
-    aspect_ratio: string,
+    image: string; // base64 
     prompt: string;
     refine: 'expert_ensemble_refiner' | string;
-    scheduler: 'K_EULER' | string;
+    scheduler: string;
     lora_scale: number;
     num_outputs: number;
     guidance_scale: number;
