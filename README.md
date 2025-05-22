@@ -91,7 +91,7 @@ This project is manually tested through UI interactions:
 
 ## 📸 Screenshot
 
-## ![App Screenshot](public/screenshot.png)
+## ![App Screenshot](public/Screenshot.png)
 
 ---
 
