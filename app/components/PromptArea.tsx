@@ -125,7 +125,7 @@ const PromptArea = () => {
       }
     } catch (error) {
       console.log(error);
-      setErrorMessage("Image generating fails");
+      setErrorMessage("Image generation failed. Try a new prompt.");
     }
   };
   return (

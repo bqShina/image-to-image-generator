@@ -63,7 +63,7 @@ const CreatedGallery = () => {
         ) : (
           <div className="text-center space-y-8 flex flex-col justify-center items-center h-[50vh]">
             <h1 className="text-2xl  font-semibold">
-              Start by uploading your product image.
+              Start by uploading your image.
             </h1>
             <p className="italic text-sm">
               💡 Then describe how you&apos;d like it to look.

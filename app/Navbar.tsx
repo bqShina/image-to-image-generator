@@ -9,7 +9,7 @@ const Navbar = () => {
           href="/"
           className="text-[#947ffd] dark:text-[#CDC1FF] text-2xl font-bold"
         >
-          Product AI
+          Image AI
         </Link>
       </div>
     </nav>
